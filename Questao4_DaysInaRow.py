@@ -22,36 +22,49 @@ lista = [
     {'Date': '2020-02-07', 'account_id': 'A1', 'User_id': 'U1'},
     {'Date': '2020-02-10', 'account_id': 'A1', 'User_id': 'U2'},
     {'Date': '2020-02-01', 'account_id': 'A2', 'User_id': 'U4'},
-    {'Date': '2020-02-01', 'account_id': 'A2', 'User_id': 'U5'}
-]
+    {'Date': '2020-02-01', 'account_id': 'A2', 'User_id': 'U5'}]
 
-# Função para converter uma data no formato 'YYYY-MM-DD' para um número inteiro (YYYYMMDD)
-def data_para_inteiro(data):
-    partes = data.split('-')
-    return int(partes[0] + partes[1] + partes[2])
+#Converter as datas pra ficar mais facil carregar e ordenar
+#ordenar
+#iterar sobre as datas, vendo se os usuarios persistem
 
-# Ordenar a lista por datas (usando a função de conversão)
-listaOrdenada = sorted(lista, key=lambda item: data_para_inteiro(item['Date']))
+def dataToInteger(data):
+    data = data.split('-')
+    return int(data[0] + data[1] + data[2])
 
-# Inicializar um dicionário para rastrear os usuários ativos por data
-usuarios_ativos_por_data = defaultdict(set)
+listaOrdenada = sorted(lista, key=lambda item: dataToInteger(item['Date']))
 
-# Encontrar usuários ativos por três dias consecutivos
+def compararData(data1, data2):
+    data1Separ = data1.split('-')
+    data2Separ = data2.split('-')
+    if(int(data2Separ[0]) == int(data1Separ[0])):
+        if(int(data1Separ[1]) == int(data2Separ[1])):
+            if(int(data1Separ[2]) == (int(data2Separ[2]) - 1)):
+                return True
+        elif(int(data1Separ[1]) == (int(data2Separ[1]) - 1)):
+            if(int(data1Separ[2]) >= 30 and int(data2Separ[2]) == 1):
+                return True
+        elif(int(data1Separ[1]) == 12 and int(data2Separ[1]) == 1):
+            if(int(data1Separ[2]) >= 30 and int(data2Separ[2]) == 1):
+                return True
+    #Seria implementado, com tempo, o caso de mudar o ano
+    return False
+
 usuarios_ativos_por_tres_dias = set()
 
-for item in listaOrdenada:
-    data = item['Date']
-    usuario = item['User_id']
-    
-    # Adicionar o usuário à lista de usuários ativos para a data atual
-    usuarios_ativos_por_data[data].add(usuario)
-    
-    # Verificar se os usuários estão ativos em três datas consecutivas
-    if len(usuarios_ativos_por_data[data]) == 1:
-        data_anterior = data
-    elif len(usuarios_ativos_por_data[data]) == 2:
-        if data_para_inteiro(data) - data_para_inteiro(data_anterior) == 1:
-            usuarios_ativos_por_tres_dias.update(usuarios_ativos_por_data[data])
+for i in range(len(listaOrdenada) - 2):
+    data1 = listaOrdenada[i]['Date']
+    usuario1 = listaOrdenada[i]['User_id']
 
-print("Usuários ativos por três dias consecutivos:")
+    data2 = listaOrdenada[i + 1]['Date']
+    usuario2 = listaOrdenada[i + 1]['User_id']
+
+    data3 = listaOrdenada[i + 2]['Date']
+    usuario3 = listaOrdenada[i + 2]['User_id']
+
+    if compararData(data1, data2):
+        if compararData(data2, data3):
+            if usuario1 == usuario2 and usuario2 == usuario3:
+                usuarios_ativos_por_tres_dias.add(usuario1)
+
 print(usuarios_ativos_por_tres_dias)
