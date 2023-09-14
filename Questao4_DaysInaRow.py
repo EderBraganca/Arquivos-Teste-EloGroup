@@ -24,28 +24,23 @@ lista = [
     {'Date': '2020-02-01', 'account_id': 'A2', 'User_id': 'U4'},
     {'Date': '2020-02-01', 'account_id': 'A2', 'User_id': 'U5'}]
 
-#Converter as datas pra ficar mais facil carregar e ordenar
-#ordenar
-#iterar sobre as datas, vendo se os usuarios persistem
-
 def dataToInteger(data):
     data = data.split('-')
     return int(data[0] + data[1] + data[2])
-
 listaOrdenada = sorted(lista, key=lambda item: dataToInteger(item['Date']))
 
 def compararData(data1, data2):
     data1Separ = data1.split('-')
     data2Separ = data2.split('-')
-    if(int(data2Separ[0]) == int(data1Separ[0])):
-        if(int(data1Separ[1]) == int(data2Separ[1])):
+    if(data2Separ[0] == data1Separ[0]):
+        if(data1Separ[1] == data2Separ[1]):
             if(int(data1Separ[2]) == (int(data2Separ[2]) - 1)):
                 return True
         elif(int(data1Separ[1]) == (int(data2Separ[1]) - 1)):
-            if(int(data1Separ[2]) >= 30 and int(data2Separ[2]) == 1):
+            if(int(data1Separ[2]) >= 30 and data2Separ[2] == '1'):
                 return True
-        elif(int(data1Separ[1]) == 12 and int(data2Separ[1]) == 1):
-            if(int(data1Separ[2]) >= 30 and int(data2Separ[2]) == 1):
+        elif(data1Separ[1] == '12' and data2Separ[1] == '1'):
+            if(int(data1Separ[2]) >= 30 and data2Separ[2] == '1'):
                 return True
     #Seria implementado, com tempo, o caso de mudar o ano
     return False

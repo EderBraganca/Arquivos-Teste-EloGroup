@@ -22,10 +22,10 @@ for funcionario in listaFuncionarios:
     salario = funcionario['salary']
     for cargo in listaCargos:
         if cargo['id'] == funcionario['id']:
-            nome_cargo = cargo['cargo']
-            if nome_cargo not in somaSalarios:
-                somaSalarios[nome_cargo] = 0
-            somaSalarios[nome_cargo] += salario
+            nome = cargo['cargo']
+            if nome not in somaSalarios:
+                somaSalarios[nome] = 0
+            somaSalarios[nome] += salario
 
 somaSalarios = dict(sorted(somaSalarios.items(), key=lambda item: item[1], reverse= True))
 print(somaSalarios)

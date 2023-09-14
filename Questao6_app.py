@@ -32,7 +32,7 @@ lista = [
 
 colaboradores_dez_2022 = defaultdict(set)
 colaboradores_jan_2023 = defaultdict(set)
-
+ 
 for item in lista:
     data = item['Date']
     account_id = item['account_id']
@@ -44,11 +44,7 @@ for item in lista:
         colaboradores_jan_2023[account_id].add(user_id)
 
 taxas_de_retencao = {}
-for account_id in colaboradores_dez_2022:
-    retencao = len(colaboradores_jan_2023[account_id]) / len(colaboradores_dez_2022[account_id]) 
-    taxas_de_retencao[account_id] = retencao
+for account_id in colaboradores_dez_2022:  
+    taxas_de_retencao[account_id] = len(colaboradores_jan_2023[account_id]) / len(colaboradores_dez_2022[account_id])
 
-i = 1
-for account_id in taxas_de_retencao.items():
-    print(f'{i}º: {account_id}')
-    i = i + 1
+print(taxas_de_retencao)
