@@ -30,8 +30,8 @@ lista = [
     {'Date': '2023-02-01','account_id': 'A2', 'User_id': 'U5'},
     {'Date': '2022-12-05','account_id': 'A2', 'User_id': 'U8'}]
 
-colaboradores_dez_2022 = defaultdict(set)
-colaboradores_jan_2023 = defaultdict(set)
+colabDez = defaultdict(set)
+colabJan = defaultdict(set)
  
 for item in lista:
     data = item['Date']
@@ -39,12 +39,12 @@ for item in lista:
     user_id = item['User_id']
     
     if data.startswith('2022-12'):
-        colaboradores_dez_2022[account_id].add(user_id)
+        colabDez[account_id].add(user_id)
     elif data.startswith('2023-01'):
-        colaboradores_jan_2023[account_id].add(user_id)
+        colabJan[account_id].add(user_id)
 
 taxas_de_retencao = {}
-for account_id in colaboradores_dez_2022:  
-    taxas_de_retencao[account_id] = len(colaboradores_jan_2023[account_id]) / len(colaboradores_dez_2022[account_id])
+for account_id in colabDez:  
+    taxas_de_retencao[account_id] = len(colabJan[account_id]) / len(colabDez[account_id])
 
 print(taxas_de_retencao)
